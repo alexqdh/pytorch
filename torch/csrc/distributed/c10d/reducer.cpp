@@ -2292,7 +2292,7 @@ void verify_params_across_processes(
   process_group->allgather(param_size_output_tensors, param_size_vec)->wait();
   auto result_size_tensors = param_size_output_tensors.front();
   for (const auto i : c10::irange(world_size)) {
-    auto param_size_for_rank = result_size_tensors[i][0].item<int>();
+    auto param_size_for_rank = result_size_tensors[i][0].item<int64_t>();
     TORCH_CHECK(
         static_cast<size_t>(param_size_for_rank) == params.size(),
         c10::str(
